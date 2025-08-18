@@ -22,7 +22,7 @@ hero_2 = Character(
 )
 
 hero_3 = Character(
-    name="Adam",
+    name="Adelbert",
     description="a warrior",
     job="warrior"
 )
