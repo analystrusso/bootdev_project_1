@@ -1,47 +1,36 @@
-from world import Location, village
-from character import Character, hero_1, hero_2, hero_3
+from world import village_street
+from character import choose_hero
+
+
+# Define game world -- done for now
+# Define character -- done for now
+# Define enemies
+# Define friendlies
+# Define items
+# Define combat -- initiative done
+
+# def premise():
+#    print("Premise: you are a hunter. You live in a village, and you've returned to "
+#          "find it overrun with monsters.")
+
 
 running = True
-
-# Character select
-heroes = {
-    "adelbert": hero_3,
-    "doric": hero_1,
-    "erzsebet": hero_2
-}
-
-# Print hero choices
-print("choose your hero:")
-for hero_obj in heroes.values():
-    print(f"- {hero_obj.name} ({hero_obj.job})")
-
-# Let the player choose
-choice = input("> ").lower()
-
-if choice in heroes:
-    current_hero = heroes[choice]
-    print(f"You have chosen {current_hero.name}, the {current_hero.job}")
-else:
-    print("Invalid choice, try again.")
-
-
-# Game loop and traversal
-current_location = village
-print(current_location.description)
+player = choose_hero()
+location = village_street
 
 while running:
-    print(f"\nYou are at the {current_location.name}: {current_location.description}\n")
+    print(f"\nYou are at the {location.name}: {location.description}\n")
 
-    for direction, destination in current_location.connections.items():
+    for direction, destination in location.connections.items():
         print(f"- {direction} to {destination.truncated_description}")
     print("Where would you like to go?")
 
     choice = input("> ").lower()
 
     try:
-        if choice in current_location.connections:
-            current = current_location.connections[choice]
-            print(current.description)
+        if choice in location.connections:
+            location = location.connections[choice]
+            # print(location.description)
         else:
             print("You cannot go that way.")
     except ValueError:
