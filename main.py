@@ -1,4 +1,4 @@
-from world import village_street
+from world import road_west
 from character import choose_hero
 
 
@@ -16,7 +16,7 @@ from character import choose_hero
 
 running = True
 player = choose_hero()
-location = village_street
+location = road_west
 
 while running:
     print(f"\nYou are at the {location.name}: {location.description}\n")
