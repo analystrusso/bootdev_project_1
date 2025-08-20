@@ -1,6 +1,7 @@
 import random
 from dataclasses import dataclass, field
 
+@dataclass
 class Combatants:
     name: str
     type: str

@@ -1,4 +1,5 @@
-from world import road_west
+from world import road_west, bakery
+from friendlies import baker, bakery
 from character import choose_hero
 
 
@@ -21,6 +22,10 @@ location = road_west
 while running:
     print(f"\nYou are at the {location.name}: {location.description}\n")
 
+    print("You see:")
+    for npc in location.friendlies:
+        print(f"- {npc.name}, the {npc.job}")
+
     for direction, destination in location.connections.items():
         print(f"- {direction} to {destination.truncated_description}")
     print("Where would you like to go?")
@@ -30,7 +35,6 @@ while running:
     try:
         if choice in location.connections:
             location = location.connections[choice]
-            # print(location.description)
         else:
             print("You cannot go that way.")
     except ValueError:

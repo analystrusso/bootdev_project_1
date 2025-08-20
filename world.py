@@ -114,6 +114,7 @@ road_east.connections = {"west": village_street_east}
 village_street_west.connections = {"west": village_entrance, "east": village_street, "north": smithy, "south": meadow}
 village_street.connections = {"west": village_street_west, "east": village_street_east, "north": village_green, "south": church}
 village_street_east.connections = {"west": village_street, "east": road_east, "north": tavern, "south": manor}
+village_street_south.connections = {"west": farmland, "south": bridge, "east":meadow}
 
 # Village structures
 bakery.connections = {"south": village_entrance}
@@ -136,6 +137,7 @@ lords_woods.connections = {"west": lords_woods_west,
                            "east": lords_woods_east,
                            "south": lords_woods_south,
                            }
+
 lords_woods_north.connections = {"west": manor, "north": road_east}
 lords_woods_west.connections = {"east": lords_woods, "north": manor}
 lords_woods_east.connections = {"west": lords_woods}
