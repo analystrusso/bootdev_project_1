@@ -1,6 +1,6 @@
 from world import road_west
 from character import choose_hero
-from dialogue import basic_convo
+from dialogue import traverse_dialogue, start
 import friendlies
 
 # Define game world -- done for now
@@ -35,7 +35,7 @@ while running:
 
     for npc in location.friendlies:
         if choice == "hello":
-            basic_convo(npc)
+            traverse_dialogue(start)
             interaction_handled = True
             break
 

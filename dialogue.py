@@ -1,30 +1,65 @@
-def basic_convo(npc):
-    print(f"{npc.name} says: Hello good traveller!")
+class DialogueNode:
+    def __init__(self, npc_line):
+        self.npc_line = npc_line
+        self.choices = {}  # {player_choice: DialogueNode}
 
+# Nodes
+start = DialogueNode("Hello traveler, what brings you here?")
+weather = DialogueNode("The weather looks fine today!")
+news = DialogueNode("What's new in the world?")
+oh_really = DialogueNode("Oh really? I didn't expect that to happen!")
+shop = DialogueNode("Here are my wares.")
+goodbye = DialogueNode("Farewell!")
+
+# Edges
+start.choices = {
+    "Ask about the weather.": weather,
+    "Show me what you have for sale.": shop,
+    "What's new?": news,
+    "Goodbye.": goodbye
+}
+weather.choices = {
+    "Back to start.": start,
+    "Goodbye.": goodbye
+}
+shop.choices = {
+    "Back to start.": start,
+    "Goodbye.": goodbye
+}
+news.choices = {
+    "Back to start.": start,
+    "Oh really?": oh_really,
+    "Goodbye.": goodbye
+}
+oh_really.choices = {
+    "Goodbye.": goodbye
+}
+
+def traverse_dialogue(start_node):
+    current = start_node
     while True:
-        prompts = {
-            "1": "Good day. Do you think we'll have good weather for hunting?",
-            "2": "I'm here to do some shopping.",
-            "3": "Hello. I'm just passing by; don't mind me."
-        }
+        print("\nNPC:", current.npc_line) # Print NPC line
 
-        responses = {
-            "1": "I hear the weather is going to be sunny today.",
-            "2": "I have some interesting things to trade. Want to see?",
-            "3": "Not a problem. Good day to you!"
-        }
+        if not current.choices:
+            print("\n--- End of conversation ---") # If no choices, end convo
+            break
 
-        print("\nOptions:")
-        for key, text in prompts.items():
-            print(f"{key}. {text}")
+        # List available player choices
+        choices_list = list(current.choices.keys())
+        for i, choice in enumerate(choices_list, 1):
+            print(f"{i}. {choice}")
 
-        choice = input("\nChoose an option:")
+        # Ask player for input
+        while True:
+            try:
+                selection = int(input("Choose an option: "))
+                if 1 <= selection <= len(choices_list):
+                    break
+                else:
+                    print("Invalid selection; try again.")
+            except ValueError:
+                print("Please enter a number.")
 
-        if choice in responses:
-            print(responses[choice])
-            if choice == "3":
-                break
-        else:
-            print("I don't understand.")
-
-
+        # Move to next node based on choice
+        chosen_text = choices_list[selection - 1]
+        current = current.choices[chosen_text]
