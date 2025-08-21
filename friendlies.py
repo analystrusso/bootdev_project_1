@@ -29,8 +29,7 @@ blacksmith = Friendlies(
     "blacksmith",
     "smithy"
 )
-smithy.friendlies.append(blacksmith
-                         )
+smithy.friendlies.append(blacksmith)
 lord = Friendlies(
     "Lord Heinrich",
     "local lord",

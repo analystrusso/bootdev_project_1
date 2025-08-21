@@ -1,19 +1,19 @@
-from world import road_west, bakery
-from friendlies import baker, bakery
+from world import road_west
 from character import choose_hero
-
+from dialogue import basic_convo
+import friendlies
 
 # Define game world -- done for now
 # Define character -- done for now
 # Define enemies
-# Define friendlies
+# Define friendlies -- done for now
+# Define dialogue
 # Define items
 # Define combat -- initiative done
 
 # def premise():
 #    print("Premise: you are a hunter. You live in a village, and you've returned to "
 #          "find it overrun with monsters.")
-
 
 running = True
 player = choose_hero()
@@ -31,11 +31,19 @@ while running:
     print("Where would you like to go?")
 
     choice = input("> ").lower()
+    interaction_handled = False
 
-    try:
-        if choice in location.connections:
-            location = location.connections[choice]
-        else:
-            print("You cannot go that way.")
-    except ValueError:
-        print("invalid choice")
+    for npc in location.friendlies:
+        if choice == "hello":
+            basic_convo(npc)
+            interaction_handled = True
+            break
+
+    if not interaction_handled:
+        try:
+            if choice in location.connections:
+                location = location.connections[choice]
+            else:
+                print("You cannot go that way.")
+        except ValueError:
+            print("invalid choice")
