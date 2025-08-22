@@ -1,15 +1,16 @@
 from world import road_west
 from character import choose_hero
-from dialogue import traverse_dialogue, start
+from dialogue import traverse_dialogue, baker_start
 import friendlies
 
 # Define game world -- done for now
 # Define character -- done for now
-# Define enemies
+# Define enemies -- working on it
 # Define friendlies -- done for now
-# Define dialogue
-# Define items
+# Define dialogue -- working on it
+# Define items -- working on it
 # Define combat -- initiative done
+# Define trade -- working on it
 
 # def premise():
 #    print("Premise: you are a hunter. You live in a village, and you've returned to "
@@ -35,7 +36,7 @@ while running:
 
     for npc in location.friendlies:
         if choice == "hello":
-            traverse_dialogue(start)
+            traverse_dialogue(baker_start)
             interaction_handled = True
             break
 

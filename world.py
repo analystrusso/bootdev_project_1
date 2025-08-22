@@ -39,7 +39,8 @@ village_street_east = Location("eastern end of main street", "the eastern part o
 )
 
 village_street_south = Location("a well-worn cart path", "this path leads south from the village entrance",
-                                "a well-worn cart path that leads south over the bridge to the mill.")
+    "A well-worn cart path that leads south over the bridge to the mill."
+)
 
 # Key village structures
 bakery = Location("village bakery", "the bakery",
@@ -75,12 +76,49 @@ meadow = Location("meadow", "a grassy meadow",
     "A wide meadow near the stream, filled with tall grasses and wildflowers. Cattle graze here."
 )
 
+path_to_mill = Location("path to the mill", "a narrow path",
+    "A narrow dirt track leading to the village mill."
+)
+
 bridge = Location("stone bridge", "a small stone bridge",
     "A stout little bridge crossing the stream, marking the boundary between fields and woods."
 )
 
 mill = Location("watermill", "a watermill by the stream",
     "The wooden watermill creaks as the wheel turns. Grain is brought here for grinding."
+)
+
+# Forest paths and forest
+path_to_forest_1 = Location("path to the forest 1", "a narrow woodland path",
+    "The dirt path winds deeper into the woods, the air cooler and the trees thicker."
+)
+
+path_to_forest_2 = Location("path to the forest 2", "a narrowing woodland trail",
+    "The track grows faint as it winds south, leading further into the forest."
+)
+
+north_forest = Location("northern forest", "the edge of the deep forest",
+    "Tall trees loom here, their canopies dimming the sunlight."
+)
+
+west_forest = Location("western forest", "a quiet part of the forest",
+    "The forest grows quiet and dense here, with only a few game trails winding through."
+)
+
+east_forest = Location("eastern forest", "forest thick with undergrowth",
+    "The eastern woods are dense with brambles and undergrowth, making travel difficult."
+)
+
+south_forest = Location("southern forest", "the forest’s southern edge",
+    "The trees thin out here, giving way to rocky ground and a faint trail southward."
+)
+
+abandoned_tower = Location("abandoned tower", "a ruined stone tower",
+    "A crumbling stone tower stands here, its upper floors collapsed. Moss and ivy cover its walls."
+)
+
+cave = Location("cave entrance", "a dark cave mouth",
+    "A yawning cave entrance gapes in the hillside, cold air spilling from its depths."
 )
 
 # Lord’s woods
@@ -114,7 +152,7 @@ road_east.connections = {"west": village_street_east}
 village_street_west.connections = {"west": village_entrance, "east": village_street, "north": smithy, "south": meadow}
 village_street.connections = {"west": village_street_west, "east": village_street_east, "north": village_green, "south": church}
 village_street_east.connections = {"west": village_street, "east": road_east, "north": tavern, "south": manor}
-village_street_south.connections = {"west": farmland, "south": bridge, "east":meadow}
+village_street_south.connections = {"west": farmland, "south": path_to_mill, "east": meadow}
 
 # Village structures
 bakery.connections = {"south": village_entrance}
@@ -122,23 +160,30 @@ smithy.connections = {"south": village_street_west}
 village_green.connections = {"south": village_street}
 tavern.connections = {"south": village_street_east}
 church.connections = {"north": village_street}
-manor.connections = {"north": village_street_east, "east": lords_woods_north,
-                     "south": lords_woods_west
-                     }
+manor.connections = {"north": village_street_east, "east": lords_woods_north, "south": lords_woods_west}
 
 # Outskirts
-farmland.connections = {"north": road_west, "east": village_street_south, "south": bridge}
+farmland.connections = {"north": road_west, "east": village_street_south}
 meadow.connections = {"west": village_street_south, "east": church}
-bridge.connections = {"north": village_street_south, "south": mill}
-mill.connections = {"north": bridge}
+path_to_mill.connections = {"north": village_street_south, "south": bridge}
+bridge.connections = {"north": path_to_mill, "south": mill}
+mill.connections = {"north": bridge, "south": path_to_forest_1}
+
+# Forest
+path_to_forest_1.connections = {"north": mill, "south": path_to_forest_2}
+path_to_forest_2.connections = {"north": path_to_forest_1, "south": north_forest}
+north_forest.connections = {"north": path_to_forest_2, "south": abandoned_tower}
+abandoned_tower.connections = {"north": north_forest, "west": west_forest, "south": south_forest, "east": east_forest}
+west_forest.connections = {"east": abandoned_tower, "west": cave}
+east_forest.connections = {"west": abandoned_tower}
+south_forest.connections = {"north": abandoned_tower}
+cave.connections = {"east": west_forest}
 
 # Lord’s woods
 lords_woods.connections = {"west": lords_woods_west,
                            "east": lords_woods_east,
-                           "south": lords_woods_south,
-                           }
-
-lords_woods_north.connections = {"west": manor, "north": road_east}
+                           "south": lords_woods_south}
+lords_woods_north.connections = {"west": manor, "south": lords_woods}
 lords_woods_west.connections = {"east": lords_woods, "north": manor}
 lords_woods_east.connections = {"west": lords_woods}
 lords_woods_south.connections = {"north": lords_woods}
