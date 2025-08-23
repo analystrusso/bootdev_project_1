@@ -1,0 +1,39 @@
+{
+  "baker_start": {
+    "npc_line": "Good day, player! How are you today?\n",
+    "choices": {
+      "I'm alright. What about you?": "baker_alright",
+      "Oh, you know, another day. Mother sent me for four loaves of whatever's freshest right now. What's good?": "baker_bread",
+      "I'm well, but I actually have to get going now.": "goodbye"
+    }
+  },
+  "baker_alright": {
+    "npc_line": "Me? Oh, I can't complain. Especially since the herbalist came by with some very fragrant basil today. I've got just the recipe for them, too. Stop in tomorrow and you'll smell what I mean.\n",
+    "choices": {
+      "Then I'm definitely coming back tomorrow. You know I love basil in pretty much anything!": "baker_start"
+    }
+  },
+  "baker_bread": {
+    "npc_line": "Well, I've got some sourdough just out of the oven, but that won't be /ready/ ready for at least an hour or two. I can set it aside for you, or I can see what's ready now if you're in a rush.\n",
+    "choices": {
+      "Sure, I can wait for the sourdough. I've got some other errands to run anyway, so I'll be back for them later.": "baker_can_wait",
+      "Eh, what's ready now? I can't really hang around long today.": "baker_cant_wait"
+    }
+  },
+  "baker_can_wait": {
+    "npc_line": "Alright then. Like I said, be back here in an hour or so and I'll have your bread ready to go.\n",
+    "choices": {
+      "Sure thing! See you later!": "goodbye"
+    }
+  },
+  "baker_cant_wait": {
+    "npc_line": "No problem. I've got some very nice pumpernickel instead. It's from late yesterday, but still fresh. How's that?",
+    "choices": {
+      "That'll do great, thanks!": "goodbye"
+    }
+  },
+  "goodbye": {
+    "npc_line": "Take care now!\n",
+    "end_conversation": true
+  }
+}

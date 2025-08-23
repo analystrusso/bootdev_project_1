@@ -1,35 +1,30 @@
+import json
+from pathlib import Path
+
 class DialogueNode:
     def __init__(self, npc_line, end_conversation=False):
         self.npc_line = npc_line
         self.choices = {}  # {player_choice: DialogueNode}
         self.end_conversation = end_conversation
 
-# Shared nodes
-goodbye = DialogueNode("Farewell!", end_conversation=True)
+def load_dialogue(filename="dialogue.json"):
+    with open(filename, "r", encoding="utf-8") as f:
+        data = json.load(f)
 
-# Bakery start
-baker_start = DialogueNode("Good day, traveler, welcome to the bakery. How are you today?")
-baker_start.choices = {
-    "What's fresh?": DialogueNode("I've got some wonderful sourdough in the oven, and rye in the display case. Care to try some?"),
-    "I'm well, but I actually have to get going now.": goodbye
-}
+    # Create all DialogueNode objects
+    nodes = {}
+    for node_name, node_data in data.items():
+        nodes[node_name] = DialogueNode(
+            node_data["npc_line"],
+            node_data.get("end_conversation", False)
+        )
 
-# Bakery first level
-baker_fresh = baker_start.choices["What's fresh?"]
-baker_fresh.choices = {
-    "Certainly. Let's try the sourdough, please.": DialogueNode("There you are; what do you think of it?"),
-    "No thanks, but it smells delicious.": DialogueNode("No problem. I'll see you later, I suppose."),
-    "I'd love to, but I'm afraid I'm allergic to sourdough.": goodbye
-}
-
-# Bakery second level
-baker_sourdough = baker_fresh.choices["Certainly. Let's try the sourdough, please."]
-baker_sourdough.choices = {
-    "The crust is really crisp. I like it!": DialogueNode("I'm very pleased to hear that, thank you."),
-    "It's not exactly to my taste. Can I try some of the rye instead?": DialogueNode("Sure. I'm particularly proud of this one."),
-    "Actually, I've just remembered an important appointment and need to run. Ta!": goodbye
-}
-
+    # Then wire up the choices
+    for node_name, node_data in data.items():
+        if "choices" in node_data:
+            for choice_text, target_name in node_data["choices"].items():
+                nodes[node_name].choices[choice_text] = nodes[target_name]
+    return nodes
 
 
 def traverse_dialogue(start_node):

@@ -1,6 +1,6 @@
 from world import road_west
 from character import choose_hero
-from dialogue import traverse_dialogue, baker_start
+from dialogue import load_dialogue, traverse_dialogue
 import friendlies
 
 # Define game world -- done for now
@@ -33,11 +33,17 @@ while running:
 
     choice = input("> ").lower()
     interaction_handled = False
+    dialogue_nodes = load_dialogue("dialogue.json")
 
     for npc in location.friendlies:
         if choice == "hello":
-            traverse_dialogue(baker_start)
-            interaction_handled = True
+            start_key = f"{npc.job.lower()}_start"
+            if start_key in dialogue_nodes:
+                start_node = dialogue_nodes[start_key]
+                traverse_dialogue(start_node)
+                interaction_handled = True
+            else:
+                print(f"{npc.name} doesn't seem to want to talk right now.")
             break
 
     if not interaction_handled:
