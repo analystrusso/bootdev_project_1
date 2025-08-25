@@ -1,5 +1,7 @@
 import json
 from pathlib import Path
+from trade import baker_trade, pumpernickel, sourdough
+
 
 class DialogueNode:
     def __init__(self, npc_line, end_conversation=False):
@@ -58,6 +60,9 @@ def traverse_dialogue(start_node):
 
         # Move to next node based on choice
         chosen_text = choices_list[selection - 1]
+
+        if chosen_text == "That'll do great, thanks!":
+            baker_trade(pumpernickel)
         next_node = current.choices[chosen_text]
         current = next_node
 

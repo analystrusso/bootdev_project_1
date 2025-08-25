@@ -1,7 +1,8 @@
-from world import road_west
-from character import choose_hero
+from character import player, create_character
 from dialogue import load_dialogue, traverse_dialogue
+from world import road_west
 import friendlies
+
 
 # Define game world -- done for now
 # Define character -- done for now
@@ -17,7 +18,6 @@ import friendlies
 #          "find it overrun with monsters.")
 
 running = True
-player = choose_hero()
 location = road_west
 
 while running:
@@ -32,6 +32,14 @@ while running:
     print("Where would you like to go?")
 
     choice = input("> ").lower()
+
+
+    # Commands
+    if choice == "character":
+        create_character(player)
+    if choice == "inventory":
+        print(player.inventory)
+
     interaction_handled = False
     dialogue_nodes = load_dialogue("dialogue.json")
 
